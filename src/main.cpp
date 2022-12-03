@@ -7,7 +7,7 @@
 #include <SD.h>
 
 #define _g_ (9.80665)
-#define FILE_BASE_NAME "FlightLog_"
+#define FILE_BASE_NAME "ImpactData_"
 bool sdexists = false;
 const uint8_t BASE_NAME_SIZE = sizeof(FILE_BASE_NAME) - 1;
 char* fileName = FILE_BASE_NAME "0000.csv";
@@ -54,7 +54,7 @@ void setup() {
                           //  which interrupt source we're configuring,
                           //  and whether to enable (true) or disable
                           //  (false) the interrupt.
-  //End set up of LIS331
+  //End set up of LIS331. Code came from https://learn.sparkfun.com/tutorials/h3lis331dl-accelerometer-breakout-hookup-guide#library-overview
 
   Serial.begin(115200);
   
@@ -107,9 +107,9 @@ void loop() {
   }
   // Printing to SD Card
   if (sdexists && f) {
-    f.print(x); f.print(","); f.print(y); f.print(","); f.print(z);
+    f.print(x); f.print(","); f.print(y); f.print(","); f.println(z);
   } else {
-    Serial.println("Either no file or the SD card is not inserted correctly");
+    Serial.print(x); Serial.print(","); Serial.print(y); Serial.print(","); Serial.println(z);
   }
 
   if (count % 15 == 0) {
